@@ -1,0 +1,9 @@
+# React Native Reusables
+
+## Using React Native Reusables Components
+
+- **Prefer React Native Reusables**: When building React Native components, check https://reactnativereusables.com/ first for reusable components before building custom implementations.
+- **Component Library**: React Native Reusables provides a comprehensive collection of pre-built, customizable components that follow best practices and design patterns.
+- **Benefits**: Using components from React Native Reusables helps ensure consistency, reduces development time, and leverages well-tested, production-ready code.
+- **When to Use**: Always check React Native Reusables for common UI components like buttons, cards, forms, navigation components, and other standard UI elements before implementing them from scratch.
+- **Customization**: Components from React Native Reusables can be customized to match your app's design system while maintaining their core functionality and best practices.

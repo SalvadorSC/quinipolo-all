@@ -1,0 +1,49 @@
+Team & League Logo Plan (Storage-Agnostic)
+==========================================
+
+1. Backend Contract
+   - Extend team payloads (e.g., `/api/teams/all`, quinipolo endpoints) with:
+       {
+         name,
+         sport,
+         gender,
+         logo: { url, alt, width, height }
+       }
+   - The frontend treats `logo.url` as opaque; no storage-specific assumptions.
+
+2. Provider Abstraction
+   - Implement an `AssetService` (or similar helper) that:
+       * Reads logo metadata from DB.
+       * Resolves the final URL based on configured provider.
+       * Handles fallbacks (default logo) if no custom image is stored.
+   - Keep all Supabase/AWS/GCS SDK usage inside this service so swapping providers requires only config + helper updates.
+
+3. Storage Strategy (Initial: Supabase Storage)
+   - Bucket layout: `teams/<sport>/<league>/<teamSlug>.webp`.
+   - Enforce image constraints at upload (WebP/PNG, ≤256×256, ≤150 KB).
+   - Public-read with CDN caching (long max-age). If future provider needs signed URLs, backend issues short-lived public links.
+
+4. Upload Workflow
+   - Bootstrap script:
+       * Iterate existing teams, map to crest sources, upload via provider helper.
+       * Store metadata (URL path, alt text, source) in DB.
+   - Admin update flow:
+       * Endpoint/UI to upload/replace logo → uses same helper, updates DB, invalidates CDN if needed.
+
+5. Frontend Changes (SurveyForm & AnswersForm first)
+   - Update types (`TeamOptionsBySport`, `SurveyData`, etc.) to include the new `logo`.
+   - `SurveyForm`: when normalizing `/api/teams/all`, keep `logo` data and pass to `MatchForm`. Display avatars with default fallback.
+   - `AnswersForm`: ensure `quinipolo.quinipolo` entries include logo info (direct from API or merged from team list) and show badges next to toggle buttons and `GoalsToggleButtonGroup`.
+   - Styling: adjust `.scss` for avatar spacing, maintain accessibility (alt text, focus outlines).
+
+6. Testing & Docs
+   - Unit tests for `AssetService` to confirm URL generation per provider.
+   - Document the logo field contract, upload constraints, fallback behavior, and migration steps for changing providers.
+
+7. Future Work (Leagues)
+   - Apply the same pattern to leagues (`league.logo` via backend contract) once team logos are live.
+   - Reuse the FE badge component for league personalization.
+
+
+
+

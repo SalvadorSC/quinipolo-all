@@ -1,0 +1,39 @@
+Team Schema Revamp Plan (2025-11-19)
+
+1. Capture current state
+   - Document existing `teams` schema (columns, constraints, indexes).
+   - Inventory current data quirks (duplicate names, gender inference gaps).
+
+2. Schema extension design
+   - Decide on enum/check for `gender` (`m`/`f`).
+   - Choose data type for `alias` (text[], default `{}`).
+   - Define nullability/defaults for both fields.
+
+3. Supabase migration
+   - ✅ Draft SQL to add `gender` (text with check constraint allowing only `m`/`f`, nullable for now) and `aliases` (`text[]` default `{}`) using `ALTER TABLE` guarded with `IF NOT EXISTS`.
+   - Provide rollback notes if needed.
+
+4. Data cleansing phase
+   - ✅ Provide Supabase SQL snippet to auto-set `gender` based on trailing ` M` / ` F` suffixes in `name`.
+   - ✅ Manual review completed for most teams; some entries legitimately remain `NULL` (unknown). App logic must treat missing gender as neutral (skip validation).
+   - ✅ Alias lists gathered and stored in `alias` column.
+
+5. Application support
+   a. Backend
+      - ✅ `/api/teams/all`: now returns structured team objects with `gender` and normalized `aliases`.
+      - Update remaining models/types/controllers to read/write `gender` & `alias` as needed.
+      - Enforce “no mixed-gender matches” validation during match creation/update (skip when gender missing).
+   b. Frontend ✅
+      - Update types/hooks/forms to include new fields.
+      - Teach `MatchForm` Autocomplete to search through aliases while showing canonical name.
+      - Surface user-friendly errors when selected teams violate gender rule.
+
+6. Testing & rollout
+   - Add unit/integration tests for new validation.
+   - Add UI tests for alias search UX.
+   - Plan deployment order (DB migration -> backend -> frontend).
+
+Status:
+- Current step: #5a (backend match validation + other touchpoints).
+- Pending: Remaining backend updates, automated tests, rollout coordination.
+

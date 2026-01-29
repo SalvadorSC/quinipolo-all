@@ -1,0 +1,12 @@
+# Sub-project repositories (managed separately)
+quinipolo-be
+quinipolo-fe
+quinipolo-mobile
+quinipolo-scrapper
+
+# Dependencies
+node_modules/
+
+# IDEs
+.DS_Store
+.cursor/

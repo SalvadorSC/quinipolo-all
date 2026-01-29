@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(wc:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm run clean:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "WebFetch(domain:quinipolo.com)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git commit --no-verify -m \"$\\(cat <<''EOF''\nfeat\\(mobile\\): implement home and quinipolo screens\n\nBuild core user flows with HomeScreen showing upcoming quinipolos and navigation, AnswerQuinipoloScreen for submitting predictions with match winner selection and goal inputs, and ViewQuinipoloScreen for viewing past predictions and results.\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit --no-verify -m \"$\\(cat <<''EOF''\nfeat\\(mobile\\): add API services layer\n\nImplement API service layer for backend communication including Supabase client configuration with JWT authentication and secure token storage, and axios-based API client with request/response interceptors for authenticated requests.\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
