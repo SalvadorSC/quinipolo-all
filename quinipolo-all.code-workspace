@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "quinipolo-be"
+		},
+		{
+			"path": "quinipolo-fe"
+		},
+		{
+			"path": "quinipolo-shared"
+		},
+		{
+			"path": "quinipolo-mobile"
+		}
+	],
+	"settings": {}
+}
